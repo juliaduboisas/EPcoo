@@ -1,0 +1,40 @@
+- criar interface 
+	- métodos comuns 
+		- Mover 
+		- Verificar posição (se saiu da tela) 
+		- Verificar estado 
+		- Verificar colisão 
+		- classes 
+			- Jogador 
+				- coleção de laser jogador 
+				- Desenho 
+			- Inimigo 
+				- Criação de subclasses (herança ou outro) 
+				- Inimigo 1 
+					- Coleção 1 
+					- Desenho 
+					- laser 1 
+					- Coleção laser 1 
+				- Inimigo 2 
+					- Coleção 2 
+					- Desenho 
+					- laser 2 
+					- Coleção laser 2 
+				- Inimigo novo 
+					- coleção nova 
+					- Desenho 
+					- laser nova 
+					- Coleção laser nova 
+					- movimentação diferente 
+					- Verifica colisão 
+			- Laser 
+				- Efeitos do inimigo 1
+				- Efeitos do inimigo 2 
+				- Efeitos do jogador 
+				- Efeitos do inimigo novo 
+				- Verifica colisão 
+				- verifica se laser saiu da tela 
+				- Estado do laser 
+				- Coleção de laser 
+				- Desenho 
+	- Sistema de pontuação
