@@ -38,3 +38,29 @@
 				- Coleção de laser 
 				- Desenho 
 	- Sistema de pontuação
+
+*Java Collections Framework*
+- conjunto de classes que implementam diversas estruturas de dados clássicas (listas, filas, árvores, hashing etc) organizadas em uma arquitetura unificada
+	- estruturas implementadas da forma mais eficiente possível, levando em conta as características de cada uma
+	- permite a troca de uma estrutura por outra, causando o mínimo de impacto no código
+- todas as estruturas são dinâmicas e permitem
+	- adicionar
+	- remover
+	- verificar
+	- percorrer
+- o framework é composto por um conjunto de classes e interfaces
+	- principais interfaces
+		- Collection	comportamentos básicos que toda estrutura deve ter
+		- List		armazenam os elementos de forma linear
+		- Set		não aceitam elementos repetidos / não definem ordem
+		- SortedSet	elementos organizados de acordo com seus valores
+		- Map		estruturas que guardam "valores" associados a "chaves"
+- o framework é composto por um conjunto de classes e interfaces
+	- principais classes
+		- ArrayList	lista linear baseada em vetor (array)
+		- LinkedList	lista ligada
+		- HashSet	tabela de hashing
+		- TreeSet	árvore de busca binária balanceada
+
+		- HashMap	chaves organizadas em uma tabela de hashing
+		- TreeMap	chaves organizadas em uma árvore de busca binária
