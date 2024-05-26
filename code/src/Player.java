@@ -1,10 +1,13 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;;
 
 public class Player extends GameElement {
     private double vx, vy;
     private double explosionStart, explosionEnd;
     private long nextShot;
+    private String powerupEnabled;
+    private long lastPowerupStartTime;
 
     public Player() {
         super(GameLib.WIDTH / 2, GameLib.HEIGHT * 0.90, 12.0, Game.ACTIVE);
@@ -13,7 +16,26 @@ public class Player extends GameElement {
         this.nextShot = System.currentTimeMillis();
         this.explosionStart = 0;
         this.explosionEnd = 0;
+        this.powerupEnabled = "false";
+        this.lastPowerupStartTime = System.currentTimeMillis();
 
+    }
+
+    public void setPowerupEnabled(String powerupEnabled) {
+
+        this.powerupEnabled = powerupEnabled;
+    }
+
+    public String getPowerupEnabled() {
+        return this.powerupEnabled;
+    }
+
+    public long getLastPowerupStartTime() {
+        return lastPowerupStartTime;
+    }
+
+    public void resetLastPowerupStartTime() {
+        this.lastPowerupStartTime = System.currentTimeMillis();
     }
 
     public String checkCollisions(ArrayList<Projectile> projectilesP,
@@ -21,6 +43,7 @@ public class Player extends GameElement {
             ArrayList<Projectile> projectilesE2,
             ArrayList<Enemy1> enemies1,
             ArrayList<Enemy2> enemies2,
+            Powerup powerup,
             long currentTime) {
         // Lógica de verificação de colisões
         // player vs projetil inimigo1
@@ -58,6 +81,7 @@ public class Player extends GameElement {
                     // projectileE1[i].setState(Game.INACTIVE);
                 }
             }
+
             // player vs inimigo1
             // for (int i = 0; i < enemies1.length; i++) {
             for (int i = 0; i < enemies1.size(); i++) {
@@ -90,6 +114,20 @@ public class Player extends GameElement {
                     this.explosionEnd = explosionStart + 2000;
                     // enemies2[i].setState(Game.INACTIVE);
                     return "hit";
+                }
+            }
+            // Verifica se o powerup foi coletado
+            // double dx = enemies1[i].getX() - getX();
+            if (powerup.getState() == Game.ACTIVE) {
+
+                double dx = powerup.getX() - getX();
+                // double dy = enemies1[i].getY() - getY();
+                double dy = powerup.getY() - getY();
+                double distance = Math.sqrt(dx * dx + dy * dy);
+                // if (distance < (enemies1[i].getRadius() + getRadius()) * 0.8) {
+                if (distance < (powerup.getRadius() + getRadius()) * 0.8) {
+                    // enemies1[i].setState(Game.INACTIVE);
+                    return "powerup";
                 }
             }
             // projetil player vs inimigo 1

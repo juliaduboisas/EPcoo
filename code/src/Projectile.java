@@ -8,10 +8,11 @@ public class Projectile extends GameElement {
         this.vx = 0;
         this.vy = 0;
     }
-    //estado player
+
+    // estado player
     public void updateStateP(long delta) {
         if (getState() == Game.ACTIVE) {
-            if (getY() < 0){
+            if (getY() < 0) {
                 setState(Game.INACTIVE);
             } else {
                 setX(getX() + vx * delta);
@@ -20,10 +21,10 @@ public class Projectile extends GameElement {
         }
     }
 
-    //estado inimigo
+    // estado inimigo
     public void updateStateE(long delta) {
         if (getState() == Game.ACTIVE) {
-            if (getY() > GameLib.HEIGHT){
+            if (getY() > GameLib.HEIGHT) {
                 setState(Game.INACTIVE);
             } else {
                 setX(getX() + vx * delta);
@@ -40,12 +41,18 @@ public class Projectile extends GameElement {
         this.vy = vy;
     }
 
-    public void renderP() {
+    public void renderP(String powerupEnabled) {
         if (getState() == Game.ACTIVE) {
-            GameLib.setColor(Color.GREEN);
-            GameLib.drawLine(getX(), getY()-5, getX(), getY()+5);
-            GameLib.drawLine(getX()-1, getY()-3, getX()-1, getY()+3);
-            GameLib.drawLine(getX()+1, getY()-3, getX()+1, getY()+3);
+            if (powerupEnabled == "powerup") {
+
+                GameLib.setColor(Color.ORANGE);
+            } else {
+
+                GameLib.setColor(Color.GREEN);
+            }
+            GameLib.drawLine(getX(), getY() - 5, getX(), getY() + 5);
+            GameLib.drawLine(getX() - 1, getY() - 3, getX() - 1, getY() + 3);
+            GameLib.drawLine(getX() + 1, getY() - 3, getX() + 1, getY() + 3);
         }
     }
 

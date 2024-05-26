@@ -28,7 +28,9 @@ public class Game {
     private long nextEnemy2;
     private int enemy2Count;
     private double enemy2SpawnX;
+    private Powerup powerup;
     private hp hpBar;
+    private long lastPowerupStartTime;
 
     public Game() {
         player = new Player();
@@ -53,6 +55,11 @@ public class Game {
         for (int i = 0; i < 10; i++) {
             enemies2.add(new Enemy2());
         }
+
+        powerup = new Powerup();
+
+        powerup.setX(Math.random() * (GameLib.WIDTH - 20.0) + 10.0);
+        powerup.setY(GameLib.HEIGHT);
 
         currentTime = System.currentTimeMillis();
         nextEnemy1 = currentTime + 2000;
@@ -81,14 +88,20 @@ public class Game {
 
             // Verificação de colisões
             String collisionStatus = player.checkCollisions(projectilesP, projectilesE1, projectilesE2, enemies1,
-                    enemies2, currentTime);
+                    enemies2, powerup, currentTime);
             if (collisionStatus == "hit") {
                 // diminui vida
+                player.setPowerupEnabled(collisionStatus);
                 hpBar.reduceHP();
                 hpBar.renderHP();
             }
             if (collisionStatus == "powerup") {
                 // ativa powerup
+                if (powerup.getState() == Game.ACTIVE) {
+
+                    player.setPowerupEnabled("powerup");
+                    powerup.setState(INACTIVE);
+                }
             }
 
             // Atualizações de estados
@@ -111,6 +124,10 @@ public class Game {
             // Lançamento de novos inimigos
             launchNewEnemies(currentTime);
 
+            // Criar powerup
+
+            updatePowerup(currentTime);
+
             // atualizar player
             player.updateState(currentTime);
 
@@ -125,6 +142,19 @@ public class Game {
             // Espera para manter o loop constante
             busyWait(currentTime + 5);
         }
+    }
+
+    private void updatePowerup(long currentTime) {
+        if (player.getPowerupEnabled() != "powerup") {
+
+            player.resetLastPowerupStartTime();
+            powerup.place(currentTime);
+        } else {
+            if (currentTime - player.getLastPowerupStartTime() > 5000) {
+                player.setPowerupEnabled("none");
+            }
+        }
+
     }
 
     private void launchNewEnemies(long currentTime) {
@@ -196,7 +226,7 @@ public class Game {
 
         // Desenha projéteis Player
         for (Projectile projectile : projectilesP) {
-            projectile.renderP();
+            projectile.renderP(player.getPowerupEnabled());
         }
 
         // desenha projéteis inimigos 1
@@ -216,6 +246,9 @@ public class Game {
         for (Enemy2 enemy : enemies2) {
             enemy.render(currentTime);
         }
+
+        // desenha Powerup
+        powerup.render();
 
         // Desenha barra de vida
         hpBar.renderHP();
@@ -249,7 +282,13 @@ public class Game {
                         projectilesP.get(free).setVx(0.0);
                         projectilesP.get(free).setVy(-1.0);
                         projectilesP.get(free).setState(ACTIVE);
-                        player.setNextShot(currentTime + 100);
+                        if (player.getPowerupEnabled() == "powerup") {
+
+                            player.setNextShot(currentTime + 25);
+                        } else {
+
+                            player.setNextShot(currentTime + 100);
+                        }
                     }
                 }
             }
