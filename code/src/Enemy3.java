@@ -21,16 +21,9 @@ public class Enemy3 extends Enemy{
                 setY(getY()+getV()*Math.sin(getAngle())*delta*-1.0);
                 setAngle(getAngle() + getRv()*delta);
                 if (currentTime > getNextShoot() && getY() < player.getY()){
-                    //int free = Game.findFreeIndex(projectiles);
                     int free = Game.findFreeIndex(projectilesE3);
 
-                    //if (free < projectiles.length){
                     if (free < projectilesE3.size()){
-                        //projectiles[free].setX(getX());
-                        //projectiles[free].setY(getY());
-                        //projectiles[free].setVx(Math.cos(getAngle())*0.45);
-                        //projectiles[free].setVy(Math.sin(getAngle())*0.45*(-1.0));
-                        //projectiles[free].setState(Game.ACTIVE);
                         projectilesE3.get(free).setX(getX());
                         projectilesE3.get(free).setY(getY());
                         projectilesE3.get(free).setVx(Math.cos(getAngle())*0.45);

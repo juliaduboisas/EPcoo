@@ -130,26 +130,18 @@ public class Player extends GameElement {
                 }
             }
 
-            // projetil player vs inimigo 1
-            // for (int i = 0; i < projectileP.length; i++) {
+            // projetil player vs inimigos
             for (int i = 0; i < projectilesP.size(); i++) {
-                // for (int j = 0; j < enemies1.length; j++) {
+                // projetil player vs inimigo 1
                 for (int j = 0; j < enemies1.size(); j++) {
-                    // if (enemies1[j].getState() == Game.ACTIVE) {
                     if (enemies1.get(j).getState() == Game.ACTIVE) {
-                        // double dx = projectileP[i].getX() - enemies1[j].getX();
                         double dx = projectilesP.get(i).getX() - enemies1.get(j).getX();
-                        // double dy = projectileP[i].getY() - enemies1[j].getY();
                         double dy = projectilesP.get(i).getY() - enemies1.get(j).getY();
                         double distance = Math.sqrt(dx * dx + dy * dy);
-                        // if (distance < enemies1[j].getRadius()) {
                         if (distance < enemies1.get(j).getRadius()) {
-                            // projectileP[i].setState(Game.INACTIVE);
-                            // enemies1[j].setState(Game.EXPLODING);
+                            // projectilesP(i).setState(Game.INACTIVE);
                             enemies1.get(j).setState(Game.EXPLODING);
-                            // enemies1[j].setExplosionStart(currentTime);
                             enemies1.get(j).setExplosionStart(currentTime);
-                            // enemies1[j].setExplosionEnd(currentTime + 500);
                             enemies1.get(j).setExplosionEnd(currentTime + 500);
                         }
                     }
@@ -177,27 +169,19 @@ public class Player extends GameElement {
                     }
                 }
                 // projetil player vs inimigo 3
-                // for (int j = 0; j < enemies3.length; j++) {
-                    for (int j = 0; j < enemies3.size(); j++) {
-                        // if (enemies2[j].getState() == Game.ACTIVE) {
-                        if (enemies2.get(j).getState() == Game.ACTIVE) {
-                            // double dx = projectileP[i].getX() - enemies2[j].getX();
-                            double dx = projectilesP.get(i).getX() - enemies3.get(j).getX();
-                            // double dy = projectileP[i].getY() - enemies2[j].getY();
-                            double dy = projectilesP.get(i).getY() - enemies3.get(j).getY();
-                            double distance = Math.sqrt(dx * dx + dy * dy);
-                            // if (distance < enemies2[j].getRadius()) {
-                            if (distance < enemies3.get(j).getRadius()) {
-                                // projectileP[i].setState(Game.INACTIVE);
-                                // enemies2[j].setState(Game.EXPLODING);
-                                enemies3.get(j).setState(Game.EXPLODING);
-                                // enemies2[j].setExplosionStart(currentTime);
-                                enemies3.get(j).setExplosionStart(currentTime);
-                                // enemies2[j].setExplosionEnd(currentTime + 500);
-                                enemies3.get(j).setExplosionEnd(currentTime + 500);
-                            }
+                for (int j = 0; j < enemies3.size(); j++) {
+                    if (enemies3.get(j).getState() == Game.ACTIVE) {
+                        double dx = projectilesP.get(i).getX() - enemies3.get(j).getX();
+                        double dy = projectilesP.get(i).getY() - enemies3.get(j).getY();
+                        double distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < enemies3.get(j).getRadius()) {
+                            // projectileP[i].setState(Game.INACTIVE);
+                            enemies3.get(j).setState(Game.EXPLODING);
+                            enemies3.get(j).setExplosionStart(currentTime);
+                            enemies3.get(j).setExplosionEnd(currentTime + 500);
                         }
                     }
+                }
     
             }
         }
