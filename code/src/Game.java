@@ -76,7 +76,7 @@ public class Game {
         nextEnemy2 = currentTime + 7000;
         enemy2Count = 0;
         enemy2SpawnX = GameLib.WIDTH * 0.20;
-        nextEnemy3 = currentTime + 4500;
+        nextEnemy3 = currentTime + 14000;
 
         // Configura o plano de fundo e as vidas
         background1 = new Background(0, 0.070, 20, 2);
@@ -223,7 +223,7 @@ public class Game {
                 enemies3.get(free).setRv(0.0);
                 enemies3.get(free).setState(ACTIVE);
                 enemies3.get(free).setNextShoot(currentTime + 500);
-                nextEnemy3 = currentTime + 300;
+                nextEnemy3 = currentTime + 5000;
             }
         }
         

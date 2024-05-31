@@ -17,19 +17,32 @@ public class Enemy3 extends Enemy{
                 setState(Game.INACTIVE);
             }
             else {
+                
                 setX(getX()+getV()*Math.cos(getAngle())*delta);
                 setY(getY()+getV()*Math.sin(getAngle())*delta*-1.0);
                 setAngle(getAngle() + getRv()*delta);
+                
                 if (currentTime > getNextShoot() && getY() < player.getY()){
-                    int free = Game.findFreeIndex(projectilesE3);
+                    double [] angles = {Math.PI/2 + Math.PI/8, Math.PI/2 - Math.PI/8};
+                    int [] freeArray = Game.findFreeIndex(projectilesE3, angles.length);
 
-                    if (free < projectilesE3.size()){
-                        projectilesE3.get(free).setX(getX());
-                        projectilesE3.get(free).setY(getY());
-                        projectilesE3.get(free).setVx(Math.cos(getAngle())*0.45);
-                        projectilesE3.get(free).setVy(Math.sin(getAngle())*0.45*(-1.0));
-                        projectilesE3.get(free).setState(Game.ACTIVE);
-                        setNextShoot((long)(currentTime + 200 + Math.random()*500));
+                    for (int k = 0; k < freeArray.length; k++){
+
+                        int free = freeArray[k];
+
+                        if (free < projectilesE3.size()){
+
+                            double a = angles[k];
+                            double vx = Math.cos(a);
+                            double vy = Math.sin(a);    
+
+                            projectilesE3.get(free).setX(getX());
+                            projectilesE3.get(free).setY(getY());
+                            projectilesE3.get(free).setVx(vx);
+                            projectilesE3.get(free).setVy(vy);
+                            projectilesE3.get(free).setState(Game.ACTIVE);
+                            setNextShoot((long)(currentTime + Math.random()*500));
+                        }
                     }
                 }
             }
