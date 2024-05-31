@@ -182,7 +182,6 @@ public class Player extends GameElement {
                         }
                     }
                 }
-    
             }
         }
         return "none";

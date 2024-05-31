@@ -1,10 +1,9 @@
 import java.awt.Color;
-import java.util.ArrayList;
 
-public class hp extends GameElement {
+public class HP extends GameElement {
     private int hp;
 
-    public hp(int hp) {
+    public HP(int hp) {
         super(440, 680, 0, Game.ACTIVE);
         this.hp = hp;
     }

@@ -30,7 +30,7 @@ public class Game {
     private long nextEnemy3;
     private int enemy2Count;
     private double enemy2SpawnX;
-    private hp hpBar;
+    private HP hpBar;
 
     // MÉTODO QUE INICIA O JOGO //
     public Game() {
@@ -81,7 +81,7 @@ public class Game {
         // Configura o plano de fundo e as vidas
         background1 = new Background(0, 0.070, 20, 2);
         background2 = new Background(0, 0.045, 50, 3);
-        hpBar = new hp(3);
+        hpBar = new HP(3);
     }
 
     public static void busyWait(long time) {
@@ -208,6 +208,7 @@ public class Game {
                 }
             }
         }
+        
         // lançando enemy3
         if (currentTime > nextEnemy3) {
 
