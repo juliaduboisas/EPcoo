@@ -28,17 +28,17 @@ public class HP extends GameElement {
     public void renderHP() {
         if (this.hp > 0) {
             GameLib.setColor(Color.RED);
-            GameLib.fillRect(100, 100, 100, 30);
+            GameLib.fillRect(80, 7.5, 160, 15);
 
         }
         if (this.hp > 1) {
             GameLib.setColor(Color.YELLOW);
-            GameLib.fillRect(220, 100, 100, 30);
+            GameLib.fillRect(240, 7.5, 160, 15);
 
         }
         if (this.hp > 2) {
             GameLib.setColor(Color.GREEN);
-            GameLib.fillRect(340, 100, 100, 30);
+            GameLib.fillRect(400, 7.5, 160, 15);
 
         }
     }
