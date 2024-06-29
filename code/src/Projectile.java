@@ -1,14 +1,40 @@
+/********************************************************/
+/*                     PROJÉTEIS                        */
+/********************************************************/
+
+//////////////////////////////////////////////////////////
+// Classe que define o comportamento dos projéteis      //
+//                                                      //
+// Incluí:                                              //
+// - atributos                                          //
+//      - velocidade no eixo x (vx)                     //
+//      - velocidade no eixo y (vy)                     //
+// - métodos                                            //
+//      - instanciação                                  //
+//      - getters e setters                             //
+//          - x                                         //
+//          - y                                         //
+//          - raio                                      //
+//          - estado                                    //
+//      - isHit                                         //
+//////////////////////////////////////////////////////////
+
 import java.awt.Color;
 
 public class Projectile extends GameElement {
+    
+    // ATRIBUTOS
     private double vx, vy;
 
+    // MÉTODOS
+    // instanciação
     public Projectile() {
         super(0, 0, 2.0, Game.INACTIVE);
         this.vx = 0;
         this.vy = 0;
     }
-    //estado player
+
+    // projéteis do jogador
     public void updateStateP(long delta) {
         if (getState() == Game.ACTIVE) {
             if (getY() < 0){
@@ -20,7 +46,7 @@ public class Projectile extends GameElement {
         }
     }
 
-    //estado inimigo
+    // projéteis do inimigo
     public void updateStateE(long delta) {
         if (getState() == Game.ACTIVE) {
             if (getY() > GameLib.HEIGHT){
@@ -32,6 +58,7 @@ public class Projectile extends GameElement {
         }
     }
 
+    // setters
     public void setVx(double vx) {
         this.vx = vx;
     }
@@ -40,6 +67,8 @@ public class Projectile extends GameElement {
         this.vy = vy;
     }
 
+    // renderizações
+        // projéteis do jogador
     public void renderP() {
         if (getState() == Game.ACTIVE) {
             GameLib.setColor(Color.GREEN);
@@ -49,6 +78,7 @@ public class Projectile extends GameElement {
         }
     }
 
+        // projéteis do inimigo
     public void renderE() {
         if (getState() == Game.ACTIVE) {
             GameLib.setColor(Color.RED);
