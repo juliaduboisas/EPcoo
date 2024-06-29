@@ -1,14 +1,44 @@
+/********************************************************/
+/*                INIMIGOS - ABSTRATO                   */
+/********************************************************/
+
+//////////////////////////////////////////////////////////
+// Classe que abstrai os inimigos                       //
+//                                                      //
+// Incluí:                                              //
+// - atributos                                          //
+//      - velocidade                                    //
+//      - angulo                                        //
+//      - rotação                                       //
+//      - explosionStart e explosionEnd                 //
+//      - nextShoot                                     //
+// - métodos                                            //
+//      - instanciação                                  //
+//      - getters e setters                             //
+//          - explosionStart                            //
+//          - explosionEnd                              //
+//          - V                                         //
+//          - Angle                                     //
+//          - Rv                                        //
+//          - nextShoot                                 //
+//////////////////////////////////////////////////////////
 
 
 public abstract class Enemy extends GameElement {
-    private double v, angle, rv;
-    private double explosionStart, explosionEnd;
-    private long nextShoot;
 
+    // ATRIBUTOS
+    private double v, angle, rv;                                // v = velocidade; angle = angulo; rv = velocidade de rotação
+    private double explosionStart, explosionEnd;                // momento de início e fim das explosões
+    private long nextShoot;                                     // momento do próximo tiro
+
+
+    // MÉTODOS
+    // instanciação
     public Enemy(double radius, int state) {
         super(0, 0, radius, state);
     }
 
+    // setters
     public void setExplosionStart(double explosionStart) {
         this.explosionStart = explosionStart;
     }
@@ -17,6 +47,23 @@ public abstract class Enemy extends GameElement {
         this.explosionEnd = explosionEnd;
     }
 
+    public double setAngle(double angle) {
+        return this.angle = angle;
+    }
+
+    public void setRv(double rv) {
+        this.rv = rv;
+    }
+
+    public void setV(double v) {
+        this.v = v;
+    }
+
+    public void setNextShoot(long nextShoot) {
+        this.nextShoot = nextShoot;
+    }
+
+    // getters
     public double getExplosionStart() {
         return explosionStart;
     }
@@ -37,26 +84,8 @@ public abstract class Enemy extends GameElement {
         return rv;
     }
 
-    public double setAngle(double angle) {
-        return this.angle = angle;
-    }
-
-    public void setRv(double rv) {
-        this.rv = rv;
-    }
-
-    public void setV(double v) {
-        this.v = v;
-    }
-
-    public void setNextShoot(long nextShoot) {
-        this.nextShoot = nextShoot;
-    }
-
     public long getNextShoot() {
         return nextShoot;
     }
 
-
- 
 }

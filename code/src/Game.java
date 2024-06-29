@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Game {
@@ -233,8 +234,8 @@ public class Game {
     private void render(long delta, long currentTime) {
         // Desenha o fundo
 
-        background1.render1(delta);
-        background2.render2(delta);
+        background1.render(delta, Color.DARK_GRAY);
+        background2.render(delta, Color.GRAY);
 
         // Desenha o player
         player.render(currentTime);

@@ -40,4 +40,8 @@ public abstract class GameElement {
     public void setState(int state) {
         this.state = state;
     }
+
+    public boolean isHit(GameElement other){
+        
+    }
 }

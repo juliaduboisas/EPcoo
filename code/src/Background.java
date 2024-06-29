@@ -1,6 +1,23 @@
+/********************************************************/
+/*                  PLANOS DE FUNDO                     */
+/********************************************************/
+
+//////////////////////////////////////////////////////////
+// Classe que caracteriza as estrelas que formam        //
+// os PLANOS DE FUNDO, por meio de duas renderizações   //
+//                                                      //
+// Incluí:                                              //
+// - atributos para velocidade, quantidade, localização //
+//   e tamanho                                          //
+// - método de instânciação                             //
+// - método de renderização                             //
+//////////////////////////////////////////////////////////
+
 import java.awt.Color;
 
 public class Background {
+    
+    // ATRIBUTOS
     private double speed;
     private double count; 
     private double[] X;
@@ -8,6 +25,9 @@ public class Background {
     private int size;
     private int w;
 
+    // MÉTODOS
+
+    // método de iniciação de instância
     public Background(long count, double speed, int size, int w) {
         this.count = count;
         this.speed = speed;
@@ -21,9 +41,10 @@ public class Background {
         }
     }
 
-    public void render1(long delta) {
+    // método de renderização, recebe os paramêtros delta e a cor que dece ser usada
+    public void render(long delta, Color color) {
 
-        GameLib.setColor(Color.DARK_GRAY);
+        GameLib.setColor(color);
         count += speed * delta;
 
         for (int i = 0; i < size; i++) {
@@ -33,16 +54,4 @@ public class Background {
         
         }
     }
-    public void render2(long delta) {
-
-        GameLib.setColor(Color.GRAY);
-        count = count + speed * delta;
-
-        for (int i = 0; i < size; i++) {
-            double newY = (Y[i] + count) % GameLib.HEIGHT;
-            GameLib.fillRect(X[i], newY, w, w); 
-        
-        }
-    }
-
 }
