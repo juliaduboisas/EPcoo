@@ -1,3 +1,7 @@
+package coo.ep;
+
+import java.awt.Color;
+
 /********************************************************/
 /*                     PROJÉTEIS                        */
 /********************************************************/
@@ -12,16 +16,15 @@
 // - métodos                                            //
 //      - instanciação                                  //
 //      - getters e setters                             //
-//          - x                                         //
-//          - y                                         //
-//          - raio                                      //
-//          - estado                                    //
-//      - isHit                                         //
+//          - vx                                        //
+//          - vy                                        //
+//      - updateStateP                                  //
+//      - updateStateE                                  //
+//      - renderizações                                 //
+//          - renderP                                   //
+//          - renderE                                   //
 //////////////////////////////////////////////////////////
 
-package coo.ep;
-
-import java.awt.Color;
 
 public class Projectile extends GameElement {
 	

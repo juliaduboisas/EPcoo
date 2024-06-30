@@ -146,7 +146,7 @@
 % Nome completo.
 % Sem ponto final.
 %-------------------------------------------------------------------------
-\autor{\uppercase{Caique Alves de Souza\\Júlia Du Bois Araújo Silva\\William Jun Okinaka Suzuki}}
+\autor{\uppercase{Caique Alves de Souza\\Gustavo Ferreira Botelho de Sena\\Júlia Du Bois Araújo Silva\\William Jun Okinaka Suzuki}}
 
 %-------------------------------------------------------------------------
 % Comentário adicional do PPgSI - Informações sobre o ``local'':
@@ -304,7 +304,202 @@
 % siglas, os quais podem ter letras em maiúscula também.
 %
 %-------------------------------------------------------------------------
-\chapter{Organização e arquitetura MIPS}
+\chapter{Críticas ao código original}
+
+O código original possui o problema principal de ser procedural. Isso dificulta tanto a debugação quanto a expansão do código.
+
+A debugação é dificultada porque, por ser procedural, as responsabilidades são misturadas na classe Main. Portanto, para modificar qualquer função, considerando a falta de encapsulamento, pode ser que seja necessário modificar todo o programa. Essa falta de encapsulamento também atrapalha a expansão do programa, pois adicionar novos inimigos ou elementos.
+
+Portanto, a forma inicial do programa o torna desnecessariamente complexo, mas pode ser melhorada com a implementação de boas práticas de programação orientada a objetos, como os princípios SOLID (\textit{Single Responsibility Principle}, \textit{Open Closed Principle}, \textit{Liskov Substitution Principle}, \textit{Interface Segregation Principle} e \textit{Dependency Inversion Principle}).
+
+\chapter{Descrição e justificativa para a nova estrutura de classes/interfaces adotada}
+
+A nova estrutura implementada utiliza as seguintes interfaces e classes:
+
+\begin{itemize}
+    \item GameElement (abstrata)
+    \item Player
+    \item Enemy (abstrata)
+    \item Enemy1
+    \item Enemy2
+    \item Enemy3
+    \item Projectile
+    \item HP
+    \item Powerup
+    \item Background
+    \item Game (main)
+\end{itemize}
+
+Cada uma dessas é explicada a seguir:
+
+\section{GameElement}
+
+GameElement é a classe principal para herança de todos os elementos do jogo, e reúne os atributos de tamanho e estado. Além disso, essa interface reúne os getters e setters relacionados aos seus atributos.
+
+Essa classe é utilizada como mãe por Player, Enemy, Projectile, HP e Powerup (ou seja, por tudo que define um elemento móvel com o qual exista interação).
+
+Ela foi utilizada como herança principalmente por conta da facilidade da reutilização de código e pelo polimorfismo exigido pelas classes que a utilizam.
+
+\section{Player}
+
+Player é a classe que define tudo relacionado ao jogador. Essa classe herda os atributos de GameElement e define outros atributos e métodos úteis a ela. Esses são:
+
+\begin{itemize}
+    \item Como atributos:
+    \begin{itemize}
+        \item[$\cdot$] velocidade x e y
+        \item[$\cdot$] momento de inicio e fim da explosão
+        \item[$\cdot$] momento do próximo tiro
+        \item[$\cdot$] ativação do powerup
+        \item[$\cdot$] momento da última ativação do powerup
+    \end{itemize}
+    \item Como métodos:
+    \begin{itemize}
+        \item[$\cdot$] instanciação
+        \item[$\cdot$] setters:
+        \begin{itemize}
+            \item[$\cdot$] setPowerupEnabled
+            \item[$\cdot$] resetLastPowerupStartTime
+            \item[$\cdot$] setNextShot
+        \end{itemize}
+        \item[$\cdot$] updateState
+        \item[$\cdot$] renderização
+    \end{itemize}
+\end{itemize}
+
+\section{Enemy}
+
+Enemy é uma classe abstrata utilizada pelos diferentes tipos de inimigos. Essa interface herda atributos e métodos de GameElement e seu propósito é facilitar a criação de novos tipos de inimigos por meio da herança. Essa classe define os seguintes atributos e métodos:
+
+\begin{itemize}
+    \item Como atributos:
+    \begin{itemize}
+        \item[$\cdot$] velocidade
+        \item[$\cdot$] angulo
+        \item[$\cdot$] rotação
+        \item[$\cdot$] explosionStart e explosionEnd
+        \item[$\cdot$] nextShoot
+    \end{itemize}
+    \item Como métodos:
+    \begin{itemize}
+        \item[$\cdot$] instanciação
+        \item[$\cdot$] getters e setters:
+        \begin{itemize}
+            \item[$\cdot$] explosionStart
+            \item[$\cdot$] explosionEnd
+            \item[$\cdot$] velocidade
+            \item[$\cdot$] ângulo
+            \item[$\cdot$] velocidade de rotação
+            \item[$\cdot$] nextShoot
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Enemy1}
+
+A classe Enemy1 herda os métodos e atributos de Enemy. Essa classe caracteriza o inimigo representado por um círculo ciano, que possui como comportamento descender e atirar projéteis um a um em uma linha reta vertical para baixo, na direção do jogador.
+
+
+\subsection{Enemy2}
+
+A classe Enemy2 herda os métodos e atributos de Enemy. Essa classe caracteriza o inimigo representado por uma sequência de losangos magenta, que possui como comportamento descender e fazer uma curva, saindo pela lateral, enquanto atira projéteis múltiplos em ângulo.
+
+\subsection{Enemy3}
+
+A classe Enemy3 herda os métodos e atributos de Enemy. Essa classe caracteriza o inimigo representado por um círculo amarelo, que possui como comportamento descender em zigue-zague e atirar dois projéteis em ângulo. A implementação desse inimigo é descrita em mais detalhes na seção 4.3 deste relatório.
+
+\section{Projectile}
+
+A classe Projectile herda os atributos e métodos de GameElement. Essa classe caracteriza os projéteis tanto do jogador quanto dos inimigos. Seus atributos e métodos são:
+
+\begin{itemize}
+    \item Como atributos:
+    \begin{itemize}
+        \item[$\cdot$] velocidade no eixo x
+        \item[$\cdot$] velocidade no eixo y
+    \end{itemize}
+    \item Como métodos:
+    \begin{itemize}
+        \item[$\cdot$] instanciação
+        \item[$\cdot$] getters e setters:
+        \begin{itemize}
+            \item[$\cdot$] velocidade no eixo x
+            \item[$\cdot$] velocidade no eixo y
+        \end{itemize}
+        \item[$\cdot$] updateStateP e updateStateE
+        \item[$\cdot$] renderP e renderE
+    \end{itemize}
+\end{itemize}
+
+\section{HP}
+
+A classe HP herda os atributos e métodos de GameElement. Essa classe caracteriza o comportamento da barra de HP, representada por três corações no canto superior esquerdo, que desaparecem um a um à medida que o jogador é atingido por projéteis e inimigos. Quando essa barra é zerada, o jogo acaba. Seus atributos e métodos próprios são:
+
+\begin{itemize}
+    \item Como atributos:
+    \begin{itemize}
+        \item[$\cdot$] hp
+    \end{itemize}
+    \item Como métodos:
+    \begin{itemize}
+        \item[$\cdot$] instanciação
+        \item[$\cdot$] getter e setter de hp
+        \item[$\cdot$] redução
+        \item[$\cdot$] renderização
+    \end{itemize}
+\end{itemize}
+
+Mais sobre o processo de implementação da classe HP é discutido na seção 4.1.
+
+\section{Powerup}
+
+A classe Powerup herda os atributos e métodos de GameElement. Essa classe implementa apenas novos métodos:
+
+\begin{itemize}
+    \item instanciação
+    \item renderização
+    \item localização e momento de renderização
+\end{itemize}
+
+Mais sobre o processo de implementação da classe Powerup é discutido na seção 4.2.
+
+\section{Background}
+
+A classe Background apenas caracteriza a geração do plano de fundo, em duas renderizações diferentes. Ela possui como atributos tudo o que modifica as estrelas utilizadas, como velocidade, contagem, localizações, tamanho e cor; e possui como métodos apenas a instanciação e a renderização.
+
+\section{Game}
+
+A classe Game caracteriza o funcionamento do jogo em si. Ela organiza as coleções de inimigos e projéteis e o momento de renderização dos múltiplos elementos. Além disso, essa classe processa o input do jogador.
+
+\chapter{Descrição de como as coleções Java foram utilizadas para substituir o uso de arrays}
+
+\section{Java Collections}
+
+O Java Collections Framework é um conjunto de classes que implementam diversas estruturas de dados clássicas, como listas, filas, árvores e hashing, organizadas em uma estrutura unificada. Essas estruturas são implementadas da forma dinâmica mais eficiente possível e de forma que troca de uma por outra causa o mínimo possível de impacto no código.
+
+As principais interfaces desse framework são Collection, List, Set, SortedSet e Map, e as principais classes são ArrayList, LinkedList, HashSet, TreeSet, HashMap e TreeMap.
+
+\section{Como foram utilizadas}
+
+No novo código, para substituir os arrays, foi utilizada a classe ArrayList do Java Collections Framework. Essa classe foi selecionada por conta de sua facilidade de uso, que ajuda a inserção e remoção fácil dos elementos necessários e permite a alteração das classes que nela são utilizadas.
+
+\chapter{Descrição de como as novas funcionalidades foram implementadas e como o código orientado a objetos ajudou neste sentido}
+
+\section{HP}
+
+A classe HP foi implementada como filha da classe GameElement para evitar a repetição de código. Ela é uma classe simples, com apenas um atributo (hp), que possui um getter e um setter, e dois métodos simples para renderização e manipulação desse atributo. Por conta da utilização dos princípios SOLID, sua implementação foi simples.
+
+Esse elemento é renderizado como três corações, das cores verde, amarela e vermelha, localizados no canto superior esquerdo da tela. À medida que o jogador é atingido e o hp diminui, os corações desaparecem. Quando o hp chega em 0, se o jogador for atingido, o jogo é encerrado.
+
+\section{Powerup}
+
+A classe Powerup é filha de GameElement. O Powerup é caracterizado por um losango preto com bordas brancas. Quando ele é coletado, o jogador fica com a capacidade de lançar projéteis laranjas, que são mais velozes que os projéteis normais. Sua implementação foi facilitada pelo encapsulamento do código, que permitiu que não fosse necessário alterar múltiplos arquivos para que essa funcionalidade operasse.
+
+\section{Enemy3}
+
+A classe Enemy3 é filha da classe Enemy. Esse novo tipo de inimigo é caracterizado por um círculo amarelo que percorre a tela de cima para baixo em zigue-zague, atirando projéteis em pares e em ângulo.
+
+Sua implementação foi facilitada por meio da herança em relação tanto à classe Enemy quanto à classe GameElement, que permitiu a reutilização de código comum e a implementação do novo inimigo em métodos já existentes, tais como o método checkCollisions, além da interação com classes já existentes, como a classe Projectile. 
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
@@ -315,6 +510,5 @@
 % ----------------------------------------------------------
 % Referências bibliográficas
 % ----------------------------------------------------------
-\bibliography{referencias.bib}
 
 \end{document}

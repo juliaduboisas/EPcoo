@@ -1,3 +1,7 @@
+package coo.ep;
+
+import java.awt.Color;
+
 /********************************************************/
 /*                        HP                            */
 /********************************************************/
@@ -14,11 +18,6 @@
 //      - reduceHP                                      //
 //      - renderHP                                      //
 //////////////////////////////////////////////////////////
-
-
-package coo.ep;
-
-import java.awt.Color;
 
 public class HP extends GameElement {
 	
