@@ -1,3 +1,5 @@
+package coo.ep;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -123,6 +125,43 @@ public class GameLib {
 		int y = (int) Math.round(cy - height/2);
 		
 		g.fillRect(x, y, (int) Math.round(width), (int) Math.round(height));
+	}
+	
+	public static void drawHeart (int x, int y) {
+		int radius = 10;
+		
+		int x1 = x;
+		int y1 = y + radius;
+		
+		int x2 = x + radius;
+		int y2 = y;
+		
+		int x3 = x + radius;
+		int y3 = y - radius;
+		
+		int x4 = x + 2;
+		int y4 = y - radius;
+		
+		int x5 = x;
+		int y5 = y - 3;
+		
+		int x6 = x - 2;
+		int y6 = y - radius;
+		
+		int x7 = x - radius;
+		int y7 = y - radius;
+		
+		int x8 = x - radius;
+		int y8 = y;
+		
+		drawLine(x1, y1, x2, y2);
+		drawLine(x2, y2, x3, y3);
+		drawLine(x3, y3, x4, y4);
+		drawLine(x4, y4, x5, y5);
+		drawLine(x5, y5, x6, y6);
+		drawLine(x6, y6, x7, y7);
+		drawLine(x7, y7, x8, y8);
+		drawLine(x8, y8, x1, y1);
 	}
 	
 	public static void display(){

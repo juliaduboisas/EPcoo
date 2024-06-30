@@ -10,16 +10,19 @@
 //      - int hp                                        //
 // - métodos                                            //
 //      - instanciação                                  //
-//      - getters e setters                             //
+//      - getter e setter                               //
 //      - reduceHP                                      //
-//      - renderização                                  //
+//      - renderHP                                      //
 //////////////////////////////////////////////////////////
+
+
+package coo.ep;
 
 import java.awt.Color;
 
 public class HP extends GameElement {
-    
-    // ATRIBUTOS
+	
+	// ATRIBUTOS
     private int hp;
 
     // MÉTODOS
@@ -53,17 +56,17 @@ public class HP extends GameElement {
     public void renderHP() {
         if (this.hp > 0) {
             GameLib.setColor(Color.RED);
-            GameLib.fillRect(80, 7.5, 160, 15);
+            GameLib.drawHeart(90, 30);
 
         }
         if (this.hp > 1) {
             GameLib.setColor(Color.YELLOW);
-            GameLib.fillRect(240, 7.5, 160, 15);
+            GameLib.drawHeart(60, 30);
 
         }
         if (this.hp > 2) {
             GameLib.setColor(Color.GREEN);
-            GameLib.fillRect(400, 7.5, 160, 15);
+            GameLib.drawHeart(30, 30);
 
         }
     }

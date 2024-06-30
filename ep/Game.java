@@ -1,6 +1,37 @@
+package coo.ep;
 
 import java.awt.Color;
 import java.util.ArrayList;
+
+/********************************************************/
+/*                        JOGO                          */
+/********************************************************/
+
+//////////////////////////////////////////////////////////
+// Classe que caracteriza o funcionamento do jogo.      //
+//                                                      //
+// Inclui:                                              //
+// - atributos                                          //
+//		- estados                                       //
+//		- player                                        //
+//		- planos de fundo    							//
+//		- coleções de projéteis							//
+//		- coleções de inimigos              			//
+//		- tempo											//
+//		- próximo inimigo								//
+//		- powerup										//
+//		- hpBar											//
+// - métodos                                            //
+// 		- instanciação 									//
+//		- busyWait										//
+//		- gameLoop										//
+//		- updatePowerup									//
+//		- launchNewEnemies                     		    //
+//		- render		                                //
+//		- processInput                                  //
+//		- findFreeIndex                                 //
+//		- main											//
+//////////////////////////////////////////////////////////
 
 public class Game {
 	// INICIALIZAÇÕES //
@@ -31,6 +62,7 @@ public class Game {
     private long nextEnemy3;
     private int enemy2Count;
     private double enemy2SpawnX;
+    private Powerup powerup;
     private HP hpBar;
 
     // MÉTODO QUE INICIA O JOGO //
@@ -71,6 +103,11 @@ public class Game {
         	enemies3.add(new Enemy3());
         }
 
+        powerup = new Powerup();
+
+        powerup.setX(Math.random() * (GameLib.WIDTH - 20.0) + 10.0);
+        powerup.setY(GameLib.HEIGHT);
+
         // Configura os estados iniciais do jogo
         currentTime = System.currentTimeMillis();
         nextEnemy1 = currentTime + 2000;
@@ -80,8 +117,8 @@ public class Game {
         nextEnemy3 = currentTime + 14000;
 
         // Configura o plano de fundo e as vidas
-        background1 = new Background(0, 0.070, 20, 2);
-        background2 = new Background(0, 0.045, 50, 3);
+        background1 = new Background(0, 0.070, 20, 2, Color.DARK_GRAY);
+        background2 = new Background(0, 0.045, 50, 3, Color.GRAY);
         hpBar = new HP(3);
     }
 
@@ -101,14 +138,20 @@ public class Game {
 
             // Verificação de colisões
             String collisionStatus = player.checkCollisions(projectilesP, projectilesE1, projectilesE2, projectilesE3, enemies1,
-                    enemies2, enemies3, currentTime);
+                    enemies2, enemies3, powerup, currentTime);
             if (collisionStatus == "hit") {
                 // diminui vida
+                player.setPowerupEnabled(collisionStatus);
                 hpBar.reduceHP();
                 hpBar.renderHP();
             }
             if (collisionStatus == "powerup") {
                 // ativa powerup
+                if (powerup.getState() == Game.ACTIVE) {
+
+                    player.setPowerupEnabled("powerup");
+                    powerup.setState(INACTIVE);
+                }
             }
 
             // Atualizações de estados
@@ -137,6 +180,10 @@ public class Game {
             // Lançamento de novos inimigos
             launchNewEnemies(currentTime);
 
+            // Criar powerup
+
+            updatePowerup(currentTime);
+
             // atualizar player
             player.updateState(currentTime);
 
@@ -151,6 +198,19 @@ public class Game {
             // Espera para manter o loop constante
             busyWait(currentTime + 5);
         }
+    }
+
+    private void updatePowerup(long currentTime) {
+        if (player.getPowerupEnabled() != "powerup") {
+
+            player.resetLastPowerupStartTime();
+            powerup.place(currentTime);
+        } else {
+            if (currentTime - player.getLastPowerupStartTime() > 5000) {
+                player.setPowerupEnabled("none");
+            }
+        }
+
     }
 
     private void launchNewEnemies(long currentTime) {
@@ -234,15 +294,15 @@ public class Game {
     private void render(long delta, long currentTime) {
         // Desenha o fundo
 
-        background1.render(delta, Color.DARK_GRAY);
-        background2.render(delta, Color.GRAY);
+        background1.render(delta);
+        background2.render(delta);
 
         // Desenha o player
-        player.render(currentTime);
+        player.render(currentTime, hpBar);
 
         // Desenha projéteis Player
         for (Projectile projectile : projectilesP) {
-            projectile.renderP();
+            projectile.renderP(player.getPowerupEnabled());
         }
 
         // desenha projéteis inimigos 1
@@ -270,6 +330,9 @@ public class Game {
         for (Enemy3 enemy : enemies3) {
             enemy.render(currentTime);
         }
+
+        // desenha Powerup
+        powerup.render();
 
         // Desenha barra de vida
         hpBar.renderHP();
@@ -303,7 +366,13 @@ public class Game {
                         projectilesP.get(free).setVx(0.0);
                         projectilesP.get(free).setVy(-1.0);
                         projectilesP.get(free).setState(ACTIVE);
-                        player.setNextShot(currentTime + 100);
+                        if (player.getPowerupEnabled() == "powerup") {
+
+                            player.setNextShot(currentTime + 25);
+                        } else {
+
+                            player.setNextShot(currentTime + 100);
+                        }
                     }
                 }
             }

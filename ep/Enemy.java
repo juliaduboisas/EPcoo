@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////////////
 // Classe que abstrai os inimigos                       //
 //                                                      //
-// Incluí:                                              //
+// Inclui:                                              //
 // - atributos                                          //
 //      - velocidade                                    //
 //      - angulo                                        //
@@ -23,15 +23,16 @@
 //          - nextShoot                                 //
 //////////////////////////////////////////////////////////
 
+package coo.ep;
 
 public abstract class Enemy extends GameElement {
 
-    // ATRIBUTOS
+	// ATRIBUTOS
     private double v, angle, rv;                                // v = velocidade; angle = angulo; rv = velocidade de rotação
     private double explosionStart, explosionEnd;                // momento de início e fim das explosões
     private long nextShoot;                                     // momento do próximo tiro
 
-
+    
     // MÉTODOS
     // instanciação
     public Enemy(double radius, int state) {
@@ -46,7 +47,7 @@ public abstract class Enemy extends GameElement {
     public void setExplosionEnd(double explosionEnd) {
         this.explosionEnd = explosionEnd;
     }
-
+    
     public double setAngle(double angle) {
         return this.angle = angle;
     }
@@ -88,4 +89,6 @@ public abstract class Enemy extends GameElement {
         return nextShoot;
     }
 
+
+ 
 }

@@ -21,55 +21,54 @@
 //      - isHit                                         //
 //////////////////////////////////////////////////////////
 
-public abstract class GameElement {
+package coo.ep;
 
+public abstract class GameElement {
+	
     // ATRIBUTOS
     private double x, y, radius;
     private int state;
 
-    // MÉTODOS
-    // instanciação
-    public GameElement(double x, double y, double radius, int state) {
+   // MÉTODOS
+   // instanciação
+   public GameElement(double x, double y, double radius, int state) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.state = state;
     }
 
-    // getters
+   // getters
     public double getX() {
         return x;
     }
 
-    
     public double getY() {
         return y;
     }
-    
-    
+
     public double getRadius() {
         return radius;
     }
-    
-    
+
+    // setters
     public int getState() {
         return state;
     }
     
-    // setters
     public void setX(double x) {
         this.x = x;
     }
-    
+
     public void setY(double y) {
         this.y = y;
     }
+
     public void setRadius(double radius) {
         this.radius = radius;
     }
-
+    
     public void setState(int state) {
         this.state = state;
     }
-
 }
